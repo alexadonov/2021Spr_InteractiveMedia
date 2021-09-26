@@ -1,3 +1,10 @@
+/*
+Author: Danielle A.
+
+A start to the rain. This class should only be called if rain gauge > 0
+
+*/
+
 Raindrop[] raindrops = new Raindrop[500];
 
 void setup() {
