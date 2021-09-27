@@ -28,7 +28,7 @@ class Raindrop {
   Raindrop() {
     x=random(width); 
     y=random(-300, -200); //so they start from the very top
-    len=10;
+    len=random(5,10);
     speed=random(1, 20); //different speeds for some variety
   }
 
