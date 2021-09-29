@@ -10,6 +10,7 @@ class OutsideController {
     switch(month) {
     case 1:
       if (hour>6 && hour < 8) {
+        //switch to day
       }
       break;
     case 2:
