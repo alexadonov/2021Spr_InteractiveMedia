@@ -1,5 +1,3 @@
-import controlP5.*;
-
 class Sky {
   float h, w;
   int colorType;
@@ -13,8 +11,8 @@ class Sky {
     },
     //night
     {
-     #002D33,
-     #858D5A
+      #002D33,
+      #858D5A
     },
     //dusk
     {
@@ -28,9 +26,9 @@ class Sky {
     }
   };
 
-  Sky(int h, int w) { //h for height, w for width, time for whatever time it is.
-    this.h = h;
+  Sky(int w, int h) { //h for height, w for width
     this.w = w;
+    this.h = h;
   }
 
   void update(int newColor) {

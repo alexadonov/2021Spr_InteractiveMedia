@@ -24,7 +24,7 @@ void setup() {
   dateChanged=true;
   
   //constructors
-  sky = new Sky(height,width);
+  sky = new Sky(width,height);
   cafe = new Cafe(width, height);
   sun = new Sun(width,height);
   furniture = new Furniture(width, height);
