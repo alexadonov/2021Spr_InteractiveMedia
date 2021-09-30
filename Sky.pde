@@ -26,7 +26,7 @@ class Sky {
     }
   };
 
-  Sky(int w, int h) { //h for height, w for width
+  Sky(float w, float h) { //h for height, w for width
     this.w = w;
     this.h = h;
   }
