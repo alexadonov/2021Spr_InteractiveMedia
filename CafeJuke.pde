@@ -1,6 +1,6 @@
 class CafeJuke {
   float xR, yR;
-  int colorType = 3;
+  int colorType;
   
   int colors[][] = {
     //day
@@ -52,6 +52,10 @@ class CafeJuke {
   CafeJuke(float _x, float _y) {
     yR = _y/20;
     xR = _x/40;
+  }
+  
+  void update(int newColor) {
+    colorType = newColor;
   }
   
   void display(){
