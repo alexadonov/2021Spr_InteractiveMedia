@@ -35,10 +35,12 @@ void setup() {
 void draw() { 
   //updates for time
   if(dateChanged){
-    sky.update(hour);
-    cafe.update(0);
-    juke.update(0);
-    furniture.update(0);
+    println("date has been changed");
+    //0 day, 1 night, 2 dusk, 3 dawn
+    sky.update(2);
+    cafe.update(2);
+    juke.update(2);
+    furniture.update(2);
     dateChanged=false;
   }
   
