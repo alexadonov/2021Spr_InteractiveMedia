@@ -4,20 +4,20 @@ class Cafe {
   
   //color array
   int colors[][] = {
-    //day
+    //0 day
     {
-      //table tops + path
+      //0 table tops + path
       #FFBFA3,
-      //table sides
+      //1 table sides
       #E08963,
-      //main wall
+      //2 main wall
       #B2EBE0,
-      //window wall
+      //3 window wall
       #E4F8F6,
-      //floor
+      //4 floor
       #EFD986
     },
-    //night
+    //1 night
     {
       //table tops + path
       #98A27D,
@@ -30,7 +30,7 @@ class Cafe {
       //floor
       #1F5496
     },
-    //dusk
+    //2 dusk
     {
       //table tops + path
       #FEADB9,
@@ -43,7 +43,7 @@ class Cafe {
       //floor
       #39093B
     },
-    //dawn
+    //3 dawn
     {
       //table tops + path
       #E7CFC8,
@@ -90,14 +90,35 @@ class Cafe {
     rect(33*xR, 0*yR, 0.5*xR, 11*yR);
     rect(20*xR, 10*yR, 20*xR, 1*yR);
     
+    //Furniture
+    //furthest chair
+    fill(colors[colorType][1]);
+    rect(38*xR, 11*yR, 2*xR, 1*yR);
+    ellipse(40*xR, 11*yR, 4*xR, 1*yR);
+    
+    //furthest table
+    fill(colors[colorType][0]);
+    quad(36*xR, 12*yR, 40*xR, 12*yR, 40*xR, 14*yR, 33*xR, 14*yR);
+    
+    //middle chair
+    fill(colors[colorType][1]);
+    rect(29*xR, 14*yR, 11*xR, 2*yR);
+    ellipse(40*xR, 14*yR, 22*xR, 1*yR);
+    
+    //closest table
+    fill(colors[colorType][0]);
+    quad(27*xR, 16*yR, 40*xR, 16*yR, 40*xR, 18*yR, 23*xR, 18*yR);
+    
+    //closest chair
+    fill(colors[colorType][1]);
+    rect(17*xR, 18*yR, 23*xR, 2*yR);
+    ellipse(40*xR, 18*yR, 46*xR, 1*yR);
     
     //counter
     fill(colors[colorType][1]);
     quad(15*xR, 9*yR, 15*xR, 12*yR, 4*xR, 15.5*yR, 4*xR, 12*yR);
     fill(colors[colorType][0]);
     quad(15*xR, 9*yR, 11*xR, 9*yR, 4*xR, 10.5*yR, 4*xR, 12*yR);
-
-    //jukebox
     
     //walls 
     //wall next to door

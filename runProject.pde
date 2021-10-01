@@ -8,7 +8,6 @@ int people = 7;
 
 //constructors
 Cafe cafe;
-Furniture furniture;
 CafeJuke juke;
 Ghosts ghosts;
 Sun sun;
@@ -27,7 +26,6 @@ void setup() {
   sky = new Sky(height,width);
   cafe = new Cafe(width, height);
   sun = new Sun(width,height);
-  furniture = new Furniture(width, height);
   juke = new CafeJuke(width,height);
   ghosts = new Ghosts(width,height,people);
 }
@@ -40,7 +38,6 @@ void draw() {
     sky.update(2);
     cafe.update(2);
     juke.update(2);
-    furniture.update(2);
     dateChanged=false;
   }
   
@@ -50,7 +47,6 @@ void draw() {
   sun.display();
   cafe.display();
   juke.display();
-  furniture.display();
 }
 
 //void updateData(int day, int month, int hour){
