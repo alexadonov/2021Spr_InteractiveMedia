@@ -1,11 +1,12 @@
 
 //Global Variables
 int month, day, hour, buttonSize, musicPlaying;
-float temp, rain, wind, solarRadiation, cloudNum, jukeWidth;
+float airTemp, rainGauge, windSpeed, solarRadiation, cloudNum, jukeWidth,peopleCounter;
 boolean dateChanged, jukeboxShown, userGuideShown;
 AudioContext ac;
 ControlP5 cp5;
 Table table;
+TableRow row;
 ArrayList<Cloud> cloudsArr = new ArrayList();
 
 //test values
@@ -278,6 +279,7 @@ void updateCloud() {
 void updateData() {
   //cloud data
   chosenDate=""; //reset 
+  row=table.findRow(chosenDate, 0);
   if (month < 10) {
     chosenDate += "0" +Integer.toString(month);
   } else {
@@ -293,19 +295,26 @@ void updateData() {
   } else {
     chosenDate += Integer.toString(hour);
   } 
-  solarRadiation = table.findRow(chosenDate, 0).getFloat(9); //grab new solar radiation data
+  
+  
+  solarRadiation = row.getFloat(9); //grab new solar radiation data
+  windSpeed = row.getFloat(8);
+  airTemp = row.getFloat(7);
+  rainGauge = row.getFloat(10);
+  peopleCounter = row.getFloat(11);
+  
   cloudsArr.clear(); //reset list
   if (solarRadiation > 1 && solarRadiation < 100) {
     for (int i=0; i<2; i++) {
-      cloudsArr.add(new Cloud(width, height));
+      cloudsArr.add(new Cloud(width, height,windSpeed));
     }
   } else if (solarRadiation > 100 && solarRadiation < 250) {
     for (int i=0; i<4; i++) {
-      cloudsArr.add(new Cloud(width, height));
+      cloudsArr.add(new Cloud(width, height,windSpeed));
     }
   } else if (solarRadiation > 250) {
     for (int i=0; i<6; i++) {
-      cloudsArr.add(new Cloud(width, height));
+      cloudsArr.add(new Cloud(width, height,windSpeed));
     }
   }
 
