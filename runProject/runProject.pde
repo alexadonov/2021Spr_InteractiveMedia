@@ -1,15 +1,18 @@
 
 //Global Variables
 int month, day, hour, buttonSize, musicPlaying;
-float temp, rain, wind, cloud, jukeWidth;
+float temp, rain, wind, cloudNum, jukeWidth;
 boolean dateChanged, jukeboxShown, userGuideShown;
 AudioContext ac;
 ControlP5 cp5;
+Table table;
+ArrayList<Cloud> cloudsArr = new ArrayList();
 
 //test values
 int people = 7;
 
 //constructors
+Cloud cloud;
 Cafe cafe;
 CafeJuke juke;
 Ghosts ghosts;
@@ -28,8 +31,7 @@ int rows = 11;
 void mousePressed() {
   float xR = juke.getX();
   float yR = juke.getY();
-  //quad(0*xR, 10.3*yR, 4*xR, 10*yR, 4*xR, 15.5*yR, 0*xR, 17*yR);
-  //&& (mouseY > 10.3*yR) && (mouseY < 10*yR) && (mouseY < 15.5*yR) && (mouseY>17*yR)
+
   if ((mouseX > xR*0) && (mouseX < 4*xR) && (mouseY >10*yR) && (mouseY <17*yR)) {
     if (!jukeboxShown) {
       jukeboxShown = true;
@@ -75,6 +77,13 @@ void setup() {
   jukeWidth = 200;
   buttonSize = 20;
   musicPlaying = 0;
+  table = loadTable("test.csv");
+  String test = table.getString(1,0); //row,column
+  println("oh no " + test);
+  cloudNum = 0;
+  for (int i=0; i<cloudNum; i++) {
+    cloudsArr.add(new Cloud());
+  } //fill up list with clouds
 
   jukeboxShown = false;
   guideimg = loadImage("user_guide.PNG");
@@ -84,9 +93,7 @@ void setup() {
   ac = new AudioContext();
   cp5 = new ControlP5(this);
 
-  //display monitor
   grid = new Cell[cols][rows];
-
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
       // Initialize each object
@@ -103,7 +110,7 @@ void setup() {
   jukebox = new Jukebox(ac, cp5);
   guide = new Guide(width-100, 30, 60);
 
-  music1 = cp5.addButton("music1").setValue(0)
+  music1 = cp5.addButton("music1")
     .setVisible(jukeboxShown)
     .setCaptionLabel("+")
     .setPosition(jukeWidth*1.05, jukeWidth*1.2)
@@ -113,7 +120,6 @@ void setup() {
     .setColorActive(color(0, 0, 255));
 
   music2 = cp5.addButton("music2")
-    .setValue(0)
     .setVisible(jukeboxShown)
     .setCaptionLabel("+")
     .setPosition(jukeWidth*1.25, jukeWidth*1.2)
@@ -123,7 +129,6 @@ void setup() {
     .setColorActive(color(0, 0, 255));
 
   music3 = cp5.addButton("music3")
-    .setValue(0)
     .setVisible(jukeboxShown)
     .setCaptionLabel("+")
     .setPosition(jukeWidth*1.45, jukeWidth*1.2)
@@ -133,7 +138,6 @@ void setup() {
     .setColorActive(color(0, 0, 255));
 
   music4 = cp5.addButton("music4")
-    .setValue(0)
     .setVisible(jukeboxShown)
     .setCaptionLabel("+")
     .setPosition(jukeWidth*1.65, jukeWidth*1.2)
@@ -143,7 +147,6 @@ void setup() {
     .setColorActive(color(0, 0, 255));
 
   music5 = cp5.addButton("music5")
-    .setValue(0)
     .setVisible(jukeboxShown)
     .setCaptionLabel("+")
     .setPosition(jukeWidth*1.85, jukeWidth*1.2)
@@ -153,7 +156,6 @@ void setup() {
     .setColorActive(color(0, 0, 255));
 
   stopB = cp5.addButton("stopMusic")
-    .setValue(0)
     .setVisible(jukeboxShown)
     .setCaptionLabel("STOP")
     .setPosition(jukeWidth*5/4, jukeWidth*1.02)
@@ -213,6 +215,8 @@ void setup() {
   catch(Exception e) {
     e.printStackTrace();
   }
+
+  println("Month is " + month + "\nDay is " + day + "\nHour is " + hour);
 }
 
 void draw() { 
@@ -253,18 +257,19 @@ void draw() {
   }
 }
 
-//void updateData(int day, int month, int hour){
-// //cloud data
+void updateData() {
+  //cloud data
+  
+  
+  //rain data
 
-// //rain data
+  //people data
+  //get people count at this datetime
+  //people = result/10;
 
-// //people data
-// //get people count at this datetime
-// //people = result/10;
-
-// //sun data
-// //outerRadius= (input data/total data)*2 + 3
-//}
+  //sun data
+  //outerRadius= (input data/total data)*2 + 3
+}
 
 
 void music1() {
@@ -375,7 +380,7 @@ int dayCheck() {
   return maxDays;
 }
 
-void keyPressed() {
+void keyPressed() { // Do not store dayCheck() into a variable; it breaks.
   if (key == CODED) {
     switch(keyCode) {
     case UP:
