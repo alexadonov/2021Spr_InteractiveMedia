@@ -78,12 +78,13 @@ void setup() {
   buttonSize = 20;
   musicPlaying = 0;
   table = loadTable("test.csv");
-  String test = table.getString(1,0); //row,column
-  println("oh no " + test);
+  String test = "081605"; //row,column
+  TableRow rowTest = table.findRow(test,0);
+  println(rowTest.getString(7));
   cloudNum = 0;
-  for (int i=0; i<cloudNum; i++) {
-    cloudsArr.add(new Cloud());
-  } //fill up list with clouds
+  //for (int i=0; i<cloudNum; i++) {
+  //  cloudsArr.add(new Cloud());
+  //} //fill up list with clouds
 
   jukeboxShown = false;
   guideimg = loadImage("user_guide.PNG");
