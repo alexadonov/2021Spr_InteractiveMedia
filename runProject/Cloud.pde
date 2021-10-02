@@ -10,7 +10,7 @@ class Cloud {
     this.y=random(0, h);
   }
 
-  void spawnCloud() {
+  void display() {
     image(cloud, x, y);
   }
 

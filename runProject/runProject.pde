@@ -1,7 +1,7 @@
 
 //Global Variables
 int month, day, hour, buttonSize, musicPlaying;
-float temp, rain, wind, cloudNum, jukeWidth;
+float temp, rain, wind, solarRadiation, cloudNum, jukeWidth;
 boolean dateChanged, jukeboxShown, userGuideShown;
 AudioContext ac;
 ControlP5 cp5;
@@ -27,6 +27,7 @@ PImage guideimg;
 Cell[][] grid; 
 int cols = 12;
 int rows = 11;
+String chosenDate;
 
 void mousePressed() {
   float xR = juke.getX();
@@ -77,14 +78,11 @@ void setup() {
   jukeWidth = 200;
   buttonSize = 20;
   musicPlaying = 0;
-  table = loadTable("test.csv");
-  String test = "081605"; //row,column
-  TableRow rowTest = table.findRow(test,0);
-  println(rowTest.getString(7));
-  cloudNum = 0;
-  //for (int i=0; i<cloudNum; i++) {
-  //  cloudsArr.add(new Cloud());
-  //} //fill up list with clouds
+  chosenDate = "";
+  table = loadTable("EIFData.csv");
+  //String test = "081605"; //row,column
+  //TableRow rowTest = table.findRow(test,0);
+  //println(rowTest.getString(7));
 
   jukeboxShown = false;
   guideimg = loadImage("user_guide.PNG");
@@ -94,12 +92,22 @@ void setup() {
   ac = new AudioContext();
   cp5 = new ControlP5(this);
 
+  //jukebox disco
   grid = new Cell[cols][rows];
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
       // Initialize each object
       grid[i][j] = new Cell(i*10, j*10, 10, 10, i + j);
     }
+  }
+
+  //clouds
+  try {
+    updateData();
+  } 
+  catch(NullPointerException e) {
+    e.printStackTrace();
+    println("Can't find date.");
   }
 
   //constructors
@@ -217,7 +225,7 @@ void setup() {
     e.printStackTrace();
   }
 
-  println("Month is " + month + "\nDay is " + day + "\nHour is " + hour);
+  println("\nMonth is " + month + "\nDay is " + day + "\nHour is " + hour);
 }
 
 void draw() { 
@@ -238,7 +246,7 @@ void draw() {
   cafe.display();
   juke.display();
   guide.display();
-
+  updateCloud();
   if (userGuideShown) {
     image(guideimg, 0, 0);
   }
@@ -258,10 +266,50 @@ void draw() {
   }
 }
 
+void updateCloud() {
+  for (int i =0; i < cloudsArr.size(); i++) {
+    Cloud c = cloudsArr.get(i);
+    c.display();
+    c.moveCloud(c);
+  }
+}
+
+
 void updateData() {
   //cloud data
-  
-  
+  chosenDate=""; //reset 
+  if (month < 10) {
+    chosenDate += "0" +Integer.toString(month);
+  } else {
+    chosenDate += Integer.toString(month);
+  }
+  if (day < 10) {
+    chosenDate += "0" + Integer.toString(day);
+  } else {
+    chosenDate +=  Integer.toString(day);
+  }
+  if (hour < 10) {
+    chosenDate += "0" +Integer.toString(hour);
+  } else {
+    chosenDate += Integer.toString(hour);
+  } 
+  solarRadiation = table.findRow(chosenDate, 0).getFloat(9); //grab new solar radiation data
+  cloudsArr.clear(); //reset list
+  if (solarRadiation > 1 && solarRadiation < 100) {
+    for (int i=0; i<2; i++) {
+      cloudsArr.add(new Cloud(width, height));
+    }
+  } else if (solarRadiation > 100 && solarRadiation < 250) {
+    for (int i=0; i<4; i++) {
+      cloudsArr.add(new Cloud(width, height));
+    }
+  } else if (solarRadiation > 250) {
+    for (int i=0; i<6; i++) {
+      cloudsArr.add(new Cloud(width, height));
+    }
+  }
+
+  updateCloud();
   //rain data
 
   //people data
@@ -271,7 +319,6 @@ void updateData() {
   //sun data
   //outerRadius= (input data/total data)*2 + 3
 }
-
 
 void music1() {
   p1.setToLoopStart();
@@ -382,6 +429,7 @@ int dayCheck() {
 }
 
 void keyPressed() { // Do not store dayCheck() into a variable; it breaks.
+  println("reached keyp = " + keyCode);
   if (key == CODED) {
     switch(keyCode) {
     case UP:
@@ -403,17 +451,26 @@ void keyPressed() { // Do not store dayCheck() into a variable; it breaks.
         day = (day >1) ? --day : 29;
       }
       break;
-    case RIGHT:
+    case 39:
       if (dayCheck() == 30) {
         day = (day <30) ? ++day : 1;
+        println("chosen date now is " + chosenDate);
+
+        updateData();
       } 
 
       if (dayCheck() == 31) {
         day = (day <31) ? ++day : 1;
+        println("chosen date now is " + chosenDate);
+
+        updateData();
       }
 
       if (dayCheck() == 29) {
         day = (day < 29) ? ++day : 1;
+        println("chosen date now is " + chosenDate);
+
+        updateData();
       }
       break;
     default: 
