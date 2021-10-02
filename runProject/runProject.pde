@@ -354,3 +354,64 @@ void playMusic() {
     break;
   }
 }
+
+int dayCheck() {
+  int[] a1 = {4, 6, 9, 11}; //30s
+  //int[] a2 = {1, 3, 5, 7, 8, 10, 12}; //31s
+  int maxDays=999;
+
+  if (month != 2) { //checks if it's feb
+    for (int i = 0; i<a1.length; i++) {
+      if (month == a1[i]) {
+        maxDays = 30;
+        break;
+      } else {
+        maxDays = 31;
+      }
+    }
+  } else {
+    maxDays = 29;
+  }
+  return maxDays;
+}
+
+void keyPressed() {
+  if (key == CODED) {
+    switch(keyCode) {
+    case UP:
+      month = (month <12) ? ++month : 1;
+      break;
+    case DOWN:
+      month = (month >1) ? --month : 12;
+      break;
+    case LEFT:
+      if (dayCheck() == 30) {
+        day = (day >1) ? --day : 30;
+      } 
+
+      if (dayCheck() == 31) {
+        day = (day >1) ? --day : 31;
+      } 
+
+      if (dayCheck() == 29) {
+        day = (day >1) ? --day : 29;
+      }
+      break;
+    case RIGHT:
+      if (dayCheck() == 30) {
+        day = (day <30) ? ++day : 1;
+      } 
+
+      if (dayCheck() == 31) {
+        day = (day <31) ? ++day : 1;
+      }
+
+      if (dayCheck() == 29) {
+        day = (day < 29) ? ++day : 1;
+      }
+      break;
+    default: 
+      break;
+    }
+  }
+}
