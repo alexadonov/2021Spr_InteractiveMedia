@@ -1,7 +1,8 @@
+
 //Global Variables
 int month, day, hour, buttonSize, musicPlaying;
 float temp, rain, wind, cloud, jukeWidth;
-boolean dateChanged, jukeboxShown;
+boolean dateChanged, jukeboxShown, userGuideShown;
 AudioContext ac;
 ControlP5 cp5;
 
@@ -16,8 +17,10 @@ Sun sun;
 Sky sky;
 Jukebox jukebox; 
 Button music1, music2, music3, music4, music5, stopB, playB;
-
 SamplePlayer p1, p2, p3, p4, p5, p6;
+Guide guide;
+PImage guideimg;
+
 
 
 void mousePressed() {
@@ -46,6 +49,14 @@ void mousePressed() {
       playB.setVisible(jukeboxShown);
     }
   }
+  
+  if(dist(mouseX,mouseY,guide.xInput,guide.yInput)<guide.size/2){
+    
+    if(!userGuideShown)userGuideShown = true;
+    else{
+      userGuideShown = false;
+    }
+  }
 }
 
 void setup() {
@@ -64,6 +75,9 @@ void setup() {
   musicPlaying = 0;
 
   jukeboxShown = false;
+  guideimg = loadImage("user_guide.PNG");
+  guideimg.resize(width,height);
+  userGuideShown = false;
   dateChanged=true;
   ac = new AudioContext();
   cp5 = new ControlP5(this);
@@ -75,6 +89,8 @@ void setup() {
   juke = new CafeJuke(width, height);
   ghosts = new Ghosts(width, height, people);
   jukebox = new Jukebox(ac, cp5);
+  guide = new Guide(width-100,30,60);
+  
 
   music1 = cp5.addButton("music1").setValue(0)
     .setVisible(jukeboxShown)
@@ -212,12 +228,16 @@ void draw() {
   sun.display();
   cafe.display();
   juke.display();
+  guide.display();
+
+  if(userGuideShown){
+    image(guideimg,0,0);
+}
 
   if (jukeboxShown) {
     jukebox.display();
   }
 }
-
 //void updateData(int day, int month, int hour){
 // //cloud data
 
