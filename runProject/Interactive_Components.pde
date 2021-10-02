@@ -85,8 +85,8 @@ class CafeJuke {
     quad(3.65*xR, 11.8*yR, 4*xR, 11.7*yR, 4*xR, 10.8*yR, 3.65*xR, 10.9*yR);
     
     //hitbox
-    fill(255);
-    quad(0*xR, 10.3*yR, 4*xR, 10*yR, 4*xR, 15.5*yR, 0*xR, 17*yR);
+    //fill(255);
+    //quad(0*xR, 10.3*yR, 4*xR, 10*yR, 4*xR, 15.5*yR, 0*xR, 17*yR);
   }
   
   float getY(){

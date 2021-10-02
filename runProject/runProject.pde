@@ -20,8 +20,10 @@ Button music1, music2, music3, music4, music5, stopB, playB;
 SamplePlayer p1, p2, p3, p4, p5, p6;
 Guide guide;
 PImage guideimg;
-
-
+//jukebox display monitor
+Cell[][] grid; 
+int cols = 12;
+int rows = 11;
 
 void mousePressed() {
   float xR = juke.getX();
@@ -40,7 +42,7 @@ void mousePressed() {
       playB.setVisible(jukeboxShown);
     } else {
       jukeboxShown = false;
-       music1.setVisible(jukeboxShown);
+      music1.setVisible(jukeboxShown);
       music2.setVisible(jukeboxShown);
       music3.setVisible(jukeboxShown);
       music4.setVisible(jukeboxShown);
@@ -49,11 +51,11 @@ void mousePressed() {
       playB.setVisible(jukeboxShown);
     }
   }
-  
-  if(dist(mouseX,mouseY,guide.xInput,guide.yInput)<guide.size/2){
-    
-    if(!userGuideShown)userGuideShown = true;
-    else{
+
+  if (dist(mouseX, mouseY, guide.xInput, guide.yInput)<guide.size/2) {
+
+    if (!userGuideShown)userGuideShown = true;
+    else {
       userGuideShown = false;
     }
   }
@@ -76,11 +78,21 @@ void setup() {
 
   jukeboxShown = false;
   guideimg = loadImage("user_guide.PNG");
-  guideimg.resize(width,height);
+  guideimg.resize(width-75, height);
   userGuideShown = false;
   dateChanged=true;
   ac = new AudioContext();
   cp5 = new ControlP5(this);
+
+  //display monitor
+  grid = new Cell[cols][rows];
+
+  for (int i = 0; i < cols; i++) {
+    for (int j = 0; j < rows; j++) {
+      // Initialize each object
+      grid[i][j] = new Cell(i*10, j*10, 10, 10, i + j);
+    }
+  }
 
   //constructors
   sky = new Sky(width, height);
@@ -89,8 +101,7 @@ void setup() {
   juke = new CafeJuke(width, height);
   ghosts = new Ghosts(width, height, people);
   jukebox = new Jukebox(ac, cp5);
-  guide = new Guide(width-100,30,60);
-  
+  guide = new Guide(width-100, 30, 60);
 
   music1 = cp5.addButton("music1").setValue(0)
     .setVisible(jukeboxShown)
@@ -109,8 +120,7 @@ void setup() {
     .setSize(buttonSize, buttonSize)
     .setColorBackground(#726A95)
     .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255))
-    ;
+    .setColorActive(color(0, 0, 255));
 
   music3 = cp5.addButton("music3")
     .setValue(0)
@@ -120,8 +130,7 @@ void setup() {
     .setSize(buttonSize, buttonSize)
     .setColorBackground(#9D7726)
     .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255))
-    ;
+    .setColorActive(color(0, 0, 255));
 
   music4 = cp5.addButton("music4")
     .setValue(0)
@@ -131,8 +140,7 @@ void setup() {
     .setSize(buttonSize, buttonSize)
     .setColorBackground(#34626C)
     .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255))
-    ;
+    .setColorActive(color(0, 0, 255));
 
   music5 = cp5.addButton("music5")
     .setValue(0)
@@ -142,11 +150,9 @@ void setup() {
     .setSize(buttonSize, buttonSize)
     .setColorBackground(#70AF85)
     .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255))
-    ;
+    .setColorActive(color(0, 0, 255));
 
-
-  stopB = cp5.addButton("STOP")
+  stopB = cp5.addButton("stopMusic")
     .setValue(0)
     .setVisible(jukeboxShown)
     .setCaptionLabel("STOP")
@@ -154,10 +160,9 @@ void setup() {
     .setSize(buttonSize*5/4, buttonSize*5/4)
     .setColorBackground(#6389df)
     .setColorForeground(color(0, 255, 0))
-    .setColorActive(color(0, 0, 255))
-    ;
+    .setColorActive(color(0, 0, 255));
 
-  playB = cp5.addButton("PLAY")
+  playB = cp5.addButton("playMusic")
     .setValue(0)
     .setVisible(jukeboxShown)
     .setCaptionLabel("PLAY")
@@ -165,8 +170,7 @@ void setup() {
     .setSize(buttonSize*5/4, buttonSize*5/4)
     .setColorBackground(#133A1B)
     .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255))
-    ;
+    .setColorActive(color(0, 0, 255));
 
   try {
     p1 = new SamplePlayer(ac, new Sample(sample1));
@@ -230,14 +234,25 @@ void draw() {
   juke.display();
   guide.display();
 
-  if(userGuideShown){
-    image(guideimg,0,0);
-}
+  if (userGuideShown) {
+    image(guideimg, 0, 0);
+  }
 
   if (jukeboxShown) {
     jukebox.display();
+    pushMatrix();
+    translate(jukeWidth+(jukeWidth/5), jukeWidth+(jukeWidth/3));
+    for (int i = 0; i < cols; i++) {     
+      for (int j = 0; j < rows; j++) {
+        // Oscillate and display each object
+        grid[i][j].oscillate();
+        grid[i][j].display();
+      }
+    }
+    popMatrix();
   }
 }
+
 //void updateData(int day, int month, int hour){
 // //cloud data
 
@@ -302,9 +317,9 @@ void music5() {
   p1.setToEnd();
 }
 
-void STOP()
-{
-  println("reached stop");
+void stopMusic() {
+  playB.setCaptionLabel("RESUME");
+  println("Music paused.");
   p1.pause(true);
   p2.pause(true);
   p3.pause(true);
@@ -312,22 +327,30 @@ void STOP()
   p5.pause(true);
 }
 
-void PLAY() {
-  println("reached play");
-  if (musicPlaying == 1)
-  {  
-    p1.pause(false);
-  } else if (musicPlaying == 2)
-  {
-    p2.pause(false);
-  } else if (musicPlaying == 3)
-  {
-    p3.pause(false);
-  } else if (musicPlaying == 4)
-  {
-    p4.pause(false);
-  } else if (musicPlaying == 5)
-  {
-    p5.pause(false);
+void playMusic() {
+  switch(musicPlaying) {
+  case 1: 
+    p1.pause(false); 
+    println("Music " + musicPlaying + " is now playing.");
+    break;
+  case 2: 
+    p2.pause(false); 
+    println("Music " + musicPlaying + " is now playing.");
+    break;
+  case 3: 
+    p3.pause(false); 
+    println("Music " + musicPlaying + " is now playing.");
+    break;
+  case 4: 
+    p4.pause(false); 
+    println("Music " + musicPlaying + " is now playing.");
+    break;
+  case 5: 
+    p5.pause(false); 
+    println("Music " + musicPlaying + " is now playing.");
+    break;
+  default: 
+    println("Error in playMusic()"); 
+    break;
   }
 }

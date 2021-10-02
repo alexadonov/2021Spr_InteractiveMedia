@@ -1,7 +1,5 @@
 import controlP5.*;
 import beads.*;
-import java.util.Arrays; 
-import controlP5.*;
 
 class Cell {
   float x, y, w, h, angle;
@@ -35,7 +33,6 @@ class Jukebox {
   Cell[][] grid; 
   int cols, rows, buttonSize, jukeWidth, musicPlaying;
   
-
   Jukebox(AudioContext _ac, ControlP5 _cp5) {
     this.ac = _ac;
     this.cp5 = _cp5;
@@ -45,23 +42,9 @@ class Jukebox {
     buttonSize = 20;
     musicPlaying = 0;
     grid = new Cell[cols][rows];
-  }
-  void setCells() {
-    for (int i = 0; i < cols; i++) {
-      for (int j = 0; j < rows; j++) {
-        // Initialize each object
-        grid[i][j] = new Cell(i*10, j*10, 10, 10, i + j);
-      }
-    }
-  }
- 
-
-
-    //Setting up audio
-    
+  } 
 
   void display() {
-    setCells();
     //Jukebox overlay
     stroke(255);
     fill(133, 129, 252);
@@ -117,15 +100,5 @@ class Jukebox {
     fill(255, 0, 0);
     quad(jukeWidth*1.5, jukeWidth/1.8, jukeWidth*1.4, jukeWidth/3, jukeWidth*1.5, jukeWidth/2.65, jukeWidth*1.6, jukeWidth/3);
 
-    pushMatrix();
-    translate(jukeWidth+(jukeWidth/5), jukeWidth+(jukeWidth/3));
-    for (int i = 0; i < cols; i++) {     
-      for (int j = 0; j < rows; j++) {
-        // Oscillate and display each object
-        grid[i][j].oscillate();
-        grid[i][j].display();
-      }
-    }
-    popMatrix();
   }
 }
