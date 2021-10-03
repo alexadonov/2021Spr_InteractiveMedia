@@ -1,12 +1,12 @@
 class Calender {
   float xR, yR;
   int month, day;
-  
+
   //days in the months
   int monthDays[] = {
-    31,29,31,30,31,30,31,31,39,31,39,31
+    31, 29, 31, 30, 31, 30, 31, 31, 39, 31, 39, 31
   };
-  
+
   String monthText[] = {
     "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
   };
@@ -60,18 +60,21 @@ class Calender {
     //println("Month: " + month + " Day: " + day);
   }
 
+  int getMonth() {
+    return month;
+  }
+  int getDay() {
+    return day;
+  }
 
   int dayCheck(int month) {
     int maxDays;
-    
     maxDays = monthDays[month-1];
-    
     return maxDays;
   }
 
   void display() {
     String dayText;
-    
     stroke(0);
     strokeWeight(3);
     rect(12*xR, 4*yR, 2*xR, 2*yR);
@@ -79,13 +82,13 @@ class Calender {
     rect(12.25*xR, 4.75*yR, 1.5*xR, 1*yR);
     fill(0);
     textSize(20);
-    text(monthText[month-1],12.55*xR,4.4*yR);
+    text(monthText[month-1], 12.55*xR, 4.4*yR);
     textSize(40);
-    if(day < 10){
+    if (day < 10) {
       dayText = "0"+day;
       text(dayText, 12.5*xR, 5.5*yR);
     } else {
-    text(day, 12.5*xR, 5.5*yR);
+      text(day, 12.5*xR, 5.5*yR);
     }
   }
 }

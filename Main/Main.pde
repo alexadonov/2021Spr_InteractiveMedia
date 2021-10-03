@@ -1,6 +1,6 @@
 //Global Variables
 int month, day, hour, colorType;
-float airTemp, rainGauge, windSpeed, solarRadiation, cloudNum, jukeWidth, peopleCounter;
+float airTemp, rainGauge, windSpeed, solarRadiation, jukeWidth, peopleCounter;
 boolean dateChanged, hourChanged, userGuideShown;
 Table table;
 TableRow row;
@@ -20,6 +20,7 @@ Sun sun;
 Sky sky;
 Calender calender;
 Clock clock;
+Rain rain;
 
 PImage guideimg;
 String chosenDate;
@@ -31,6 +32,8 @@ void setup() {
   month=month();
   day=day();
   hour=hour();
+  updateData();
+
   dateChanged=true;
   hourChanged = true;
   colorType = getColortype();
@@ -44,6 +47,7 @@ void setup() {
   ghosts = new Ghosts(width, height, people);
   calender = new Calender(width, height, month(), day());
   clock = new Clock(month, day, hour, cafe.getX(), cafe.getY());
+  cloud = new Cloud(width, height, windSpeed);
   guide = new Guide(width-100, 30, 60);
 
   guideimg = loadImage("user_guide.PNG");
@@ -65,6 +69,7 @@ void draw() {
   }
 
   //initial displays
+
   sky.display();
   sun.display();
   cafe.display();
@@ -73,7 +78,7 @@ void draw() {
   ghosts.display();
   clock.display();
   guide.display();
-
+  updateCloud();
 
   if (userGuideShown) {
     image(guideimg, 0, 0);
@@ -81,8 +86,29 @@ void draw() {
 }
 
 void keyPressed() {
-  calender.keyPressed();
   updateData();
+  calender.keyPressed();
+  month = calender.getMonth();
+  day = calender.getDay();
+}
+
+
+void mousePressed() { 
+  //Circle
+  if (dist(mouseX, mouseY, 13*juke.getX(), 2*juke.getY()) < clock.getCircleDiameter()/2 ) {
+    hour = clock.mousePressed();
+    hourChanged = true;
+    updateData();
+  }
+
+  //Guide
+  if (dist(mouseX, mouseY, guide.xInput, guide.yInput)<guide.size/2) {
+    if (!userGuideShown)
+      userGuideShown = true;
+    else {
+      userGuideShown = false;
+    }
+  }
 }
 
 //calculates the correct period of the day(day,night,dusk,dawn) based on hour and month
@@ -125,38 +151,13 @@ int getColortype() {
   return newColor;
 }
 
-void mousePressed() { 
-  if (dist(mouseX, mouseY, 13*juke.getX(), 2*juke.getY()) < clock.getCircleDiameter()/2 ) {
-    hour = clock.mousePressed();
-    hourChanged = true;
+void updateCloud() {
+  for (int i =0; i < cloudsArr.size(); i++) {
+    Cloud c = cloudsArr.get(i);
+    c.display();
+    c.moveCloud(c);
   }
-
-  //Guide
-  if (dist(mouseX, mouseY, guide.xInput, guide.yInput)<guide.size/2) {
-    if (!userGuideShown)
-      userGuideShown = true;
-    else {
-      userGuideShown = false;
-    }
-  }
-  // if(dist(mouseX, mouseY, 0, 0) < (clock.getCircleDiameter()/2)){
 }
-
-//void updateData(int day, int month, int hour){
-// //cloud data
-
-// //rain data
-
-// //people data
-// //get people count at this datetime
-// //people = result/10;
-
-// //sun data
-// //outerRadius= (input data/total data)*2 + 3
-//}
-
-  //Clock
-  
 
 void updateData() {
   //cloud data
@@ -176,63 +177,57 @@ void updateData() {
   } else {
     chosenDate += Integer.toString(hour);
   } 
-  row=table.findRow(chosenDate, 0);
-  solarRadiation = row.getFloat(9); //grab new solar radiation data
-  windSpeed = row.getFloat(8);
-  airTemp = row.getFloat(7);
-  rainGauge = row.getFloat(10);
-  peopleCounter = row.getFloat(11);
-
-  cloudsArr.clear(); //reset list
-  if (solarRadiation > 1 && solarRadiation < 100) {
-    for (int i=0; i<2; i++) {
-      cloudsArr.add(new Cloud(width, height, windSpeed));
+  try {
+    row=table.findRow(chosenDate, 0);
+    solarRadiation = row.getFloat(9); //grab new solar radiation data
+    windSpeed = row.getFloat(8);
+    airTemp = row.getFloat(7);
+    rainGauge = row.getFloat(10);
+    peopleCounter = row.getFloat(11);
+    cloudsArr.clear(); //reset list
+    if (solarRadiation > 1 && solarRadiation < 100) {
+      for (int i=0; i<2; i++) {
+        cloudsArr.add(new Cloud(width, height, windSpeed));
+      }
+    } else if (solarRadiation > 100 && solarRadiation < 250) {
+      for (int i=0; i<4; i++) {
+        cloudsArr.add(new Cloud(width, height, windSpeed));
+      }
+    } else if (solarRadiation > 250) {
+      for (int i=0; i<6; i++) {
+        cloudsArr.add(new Cloud(width, height, windSpeed));
+      }
     }
-  } else if (solarRadiation > 100 && solarRadiation < 250) {
-    for (int i=0; i<4; i++) {
-      cloudsArr.add(new Cloud(width, height, windSpeed));
-    }
-  } else if (solarRadiation > 250) {
-    for (int i=0; i<6; i++) {
-      cloudsArr.add(new Cloud(width, height, windSpeed));
-    }
+  } 
+  catch(NullPointerException e) {
+    solarRadiation = 0;
+    windSpeed = 0;
+    airTemp = 0;
+    rainGauge = 0;
+    peopleCounter = 1;
   }
 
-  updateCloud();
-  //rain data
+  //Cloud
+  //reset list
+
+  //println("chosend " + chosenDate);
+  //println("clouds size " + cloudsArr.size());
+
+
+  //Rain
+  //Rain(float _w, float _h, float numDrops) {
+  //500*raingauge
+  //println("rain gauge " + rainGauge);
+  //if (rainGauge > 0) {
+  //  rain = new Rain(width, height, 500*rainGauge);
+  //  rain.display();
+  //}
+
 
   //people data
   //get people count at this datetime
   //people = result/10;
 
   //sun data
-  //outerRadius= (input data/total data)*2 + 3
-}
-
-void updateCloud() {
-  for (int i =0; i < cloudsArr.size(); i++) {
-    Cloud c = cloudsArr.get(i);
-    c.display();
-    c.moveCloud(c);
-  }
-}
-
-int dayCheck() {
-  int[] a1 = {4, 6, 9, 11}; //30s
-  //int[] a2 = {1, 3, 5, 7, 8, 10, 12}; //31s
-  int maxDays=999;
-
-  if (month != 2) { //checks if it's feb
-    for (int i = 0; i<a1.length; i++) {
-      if (month == a1[i]) {
-        maxDays = 30;
-        break;
-      } else {
-        maxDays = 31;
-      }
-    }
-  } else {
-    maxDays = 29;
-  }
-  return maxDays;
+  //outerRadius= (input data*0.2
 }

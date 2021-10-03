@@ -22,6 +22,4 @@ class Cloud {
       c.y=random(0, h); //will be changed depending where the window is
     }
   }
-  
-  
 }

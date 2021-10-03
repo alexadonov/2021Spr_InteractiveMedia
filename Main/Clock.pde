@@ -15,7 +15,7 @@ class Clock {
     if (h < 23) {
       h++;
     } else {
-      h = 0;
+      h = 24;
     }
     println("hour is " +h);
     return h;
