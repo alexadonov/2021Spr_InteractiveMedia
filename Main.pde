@@ -8,7 +8,7 @@ int people = 7;
 
 //constructors
 Cafe cafe;
-Jukebox juke;
+CafeJuke juke;
 Ghosts ghosts;
 Sun sun;
 Sky sky;
@@ -27,7 +27,7 @@ void setup() {
   sky = new Sky(height,width);
   cafe = new Cafe(width, height);
   sun = new Sun(width,height);
-  juke = new Jukebox(width,height);
+  juke = new CafeJuke(width,height);
   ghosts = new Ghosts(width,height,people);
   calender = new Calender(width,height, month(), day());
 }
@@ -46,16 +46,17 @@ void draw() {
     cafe.update(colorType);
     calender.update(colorType);
     juke.update(colorType);
+    ghosts.update(people);
     dateChanged=false;
   }
   
   //initial displays
   sky.display();
   sun.display();
-  ghosts.display();
   cafe.display();
   calender.display();
   juke.display();
+  ghosts.display();
 }
 
 void keyPressed() {
@@ -101,16 +102,3 @@ int getColortype(int hour, int month){
   }
   return 1;
 }
-
-//void updateData(int day, int month, int hour){
-// //cloud data
- 
-// //rain data
- 
-// //people data
-// //get people count at this datetime
-// //people = result/10;
- 
-// //sun data
-// //outerRadius= (input data/total data)*2 + 3
-//}
