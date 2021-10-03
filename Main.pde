@@ -36,28 +36,36 @@ void draw() {
   //updates for time
   if(dateChanged){
     println("date has been changed");
+    //retrieve new colorType for sky, cafe, juke updates
     colorType = getColortype(hour, month);
     println("new color is" + colorType);
+    
     //0 day, 1 night, 2 dusk, 3 dawn
-    sky.update(2);
-    cafe.update(2);
-    juke.update(2);
+    sky.update(colorType);
+    sun.update(colorType);
+    cafe.update(colorType);
+    juke.update(colorType);
     dateChanged=false;
   }
   
   //initial displays
   sky.display();
-  ghosts.display();
   sun.display();
   cafe.display();
   calender.display();
   juke.display();
-  
-  calender.keyPressed();
+  ghosts.display();
 }
 
+void keyPressed() {
+ calender.keyPressed(); 
+}
+
+//calculates the correct period of the day(day,night,dusk,dawn) based on hour and month
+//then sets the colorType to reflect that period
 int getColortype(int hour, int month){
   int newColor = colorType; //default to current ColorType
+  int monthPeriods = 2;
   int periods[][] = {
     //0 Jan, Dec
     {5,20},
@@ -71,13 +79,23 @@ int getColortype(int hour, int month){
     {5,19}
   };
   
-  if(hour>periods[month-1][0] && hour<periods[month-1][1]){ //day
+  if(month==1 || month==12){
+    monthPeriods=0;
+  } else if (month==2 || month==3){
+   monthPeriods=1; 
+  } else if(month==10){
+    monthPeriods=3;
+  } else if(month==11){
+    monthPeriods=4;
+  }
+  
+  if(hour>periods[monthPeriods][0] && hour<periods[monthPeriods][1]){ //day
     newColor=0;
-  } else if(hour<periods[month-1][0] || hour>periods[month-1][1]){ //night
+  } else if(hour<periods[monthPeriods][0] || hour>periods[monthPeriods][1]){ //night
     newColor=1;
-  } else if (hour == periods[month-1][1]){ //dusk
+  } else if (hour == periods[monthPeriods][1]){ //dusk
     newColor=2;
-  } else if (hour == periods[month-1][0]){ //dawn
+  } else if (hour == periods[monthPeriods][0]){ //dawn
     newColor=3;
   }
   return newColor;
