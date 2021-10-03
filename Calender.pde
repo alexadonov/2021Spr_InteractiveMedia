@@ -78,6 +78,8 @@ class Calender {
     rect(12*xR, 4*yR, 2*xR, 0.5*yR);
     rect(12.25*xR, 4.75*yR, 1.5*xR, 1*yR);
     fill(0);
+    textSize(20);
+    text(monthText[month-1],12.55*xR,4.4*yR);
     textSize(40);
     if(day < 10){
       dayText = "0"+day;
