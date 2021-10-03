@@ -85,28 +85,21 @@ class Jukebox {
       .setColorActive(color(0, 0, 255));
   } 
 
-  void mousePressed() {
+  void mousePressed() {   
     if ((mouseX > xR*0) && (mouseX < 4*xR) && (mouseY >10*yR) && (mouseY <17*yR)) {
-      if (!jukeboxShown) {
-        jukeboxShown = true;
-        music1.setVisible(jukeboxShown);
-        music2.setVisible(jukeboxShown);
-        music3.setVisible(jukeboxShown);
-        music4.setVisible(jukeboxShown);
-        music5.setVisible(jukeboxShown);
-        stopB.setVisible(jukeboxShown);
-        playB.setVisible(jukeboxShown);
-      } else {
-        jukeboxShown = false;
-        music1.setVisible(jukeboxShown);
-        music2.setVisible(jukeboxShown);
-        music3.setVisible(jukeboxShown);
-        music4.setVisible(jukeboxShown);
-        music5.setVisible(jukeboxShown);
-        stopB.setVisible(jukeboxShown);
-        playB.setVisible(jukeboxShown);
-      }
+      jukeboxShown = !jukeboxShown;
+      buttonShown(jukeboxShown);
     }
+  }
+
+  void buttonShown(boolean jukeboxShown) {
+    music1.setVisible(jukeboxShown);
+    music2.setVisible(jukeboxShown);
+    music3.setVisible(jukeboxShown);
+    music4.setVisible(jukeboxShown);
+    music5.setVisible(jukeboxShown);
+    stopB.setVisible(jukeboxShown);
+    playB.setVisible(jukeboxShown);
   }
 
   void music1() {
