@@ -136,15 +136,6 @@ class Cafe {
     line(13*xR, 2*yR, 13*xR, 1.25*yR);
     line(13*xR, 2*yR, 13.5*xR, 1.5*yR);
     
-    //calender
-    strokeWeight(3);
-    rect(12*xR, 4*yR, 2*xR, 2*yR);
-    rect(12*xR, 4*yR, 2*xR, 0.5*yR);
-    rect(12.25*xR, 4.75*yR, 0.5*xR, 0.5*yR);
-    rect(13.25*xR, 4.75*yR, 0.5*xR, 0.5*yR);
-    rect(12.25*xR, 5.4*yR, 0.5*xR, 0.5*yR);
-    rect(13.25*xR, 5.4*yR, 0.5*xR, 0.5*yR);
-    
     //data board
     noStroke();
     fill(colors[colorType][1]);
