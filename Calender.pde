@@ -1,6 +1,6 @@
 class Calender {
   float xR, yR;
-  int month, day, colorType;
+  int colorType;
   
   //days in the months
   int monthDays[] = {
@@ -52,11 +52,9 @@ class Calender {
     }
   };
   
-  Calender(float _x, float _y, int _month, int _day) {
+  Calender(float _x, float _y) {
     xR = _x/40;
     yR = _y/20;
-    month = _month;
-    day = _day;
   }
 
   void keyPressed() {
@@ -98,7 +96,8 @@ class Calender {
         break;
       }
     }
-    //println("Month: " + month + " Day: " + day);
+    dateChanged=true;
+    updateData();
   }
 
 

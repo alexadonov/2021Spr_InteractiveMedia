@@ -4,7 +4,7 @@ float airTemp, rainGauge, windSpeed, solarRadiation, cloudNum, jukeWidth;
 int peopleCounter;
 Table table;
 TableRow row;
-boolean dateChanged, hourChanged, databoardShown;
+boolean dateChanged, hourChanged, databoardShown, guideShown;
 String chosenDate;
 
 //constructors
@@ -15,6 +15,8 @@ Sun sun;
 Sky sky;
 Calender calender;
 DataBoard databoard;
+Guide guide;
+Clock clock;
 
 void setup() {
   size(2000, 1000);
@@ -35,8 +37,10 @@ void setup() {
   sun = new Sun(width, height);
   juke = new CafeJuke(width, height);
   ghosts = new Ghosts(width, height, peopleCounter);
-  calender = new Calender(width, height, month(), day());
+  calender = new Calender(width, height);
   databoard = new DataBoard(width, height);
+  guide = new Guide(width-30, 30, 60);
+  clock = new Clock(month(), day(), hour(), width, height);
 }
 
 void draw() { 
@@ -69,6 +73,8 @@ void draw() {
   if (databoardShown) {
     databoard.display();
   }
+  guide.display();
+  clock.display();
 }
 
 void keyPressed() {
@@ -78,6 +84,8 @@ void keyPressed() {
 
 void mousePressed() {
   databoard.mousePressed();
+  guide.mousePressed();
+  clock.mousePressed();
 }
 
 void updateData() {

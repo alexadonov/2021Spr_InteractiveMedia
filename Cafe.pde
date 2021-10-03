@@ -128,14 +128,6 @@ class Cafe {
     fill(colors[colorType][2]);
     quad(11*xR, 0*yR, 0*xR, 0*yR, 0*xR, 12*yR, 11*xR, 9*yR);
     
-    //clock
-    fill(#FFFFFF);
-    stroke(0);
-    strokeWeight(4);
-    ellipse(13*xR, 2*yR, 2*xR, 2*yR);
-    line(13*xR, 2*yR, 13*xR, 1.25*yR);
-    line(13*xR, 2*yR, 13.5*xR, 1.5*yR);
-    
     //data board
     noStroke();
     fill(colors[colorType][1]);
