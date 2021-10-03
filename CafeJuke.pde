@@ -1,4 +1,4 @@
-class Jukebox {
+class CafeJuke {
   float xR, yR;
   int colorType;
   
@@ -49,7 +49,7 @@ class Jukebox {
     }
   };
   
-  Jukebox(float _x, float _y) {
+  CafeJuke(float _x, float _y) {
     yR = _y/20;
     xR = _x/40;
   }
