@@ -1,4 +1,3 @@
-
 //Global Variables
 int month, day, hour, buttonSize, musicPlaying;
 float airTemp, rainGauge, windSpeed, solarRadiation, cloudNum, jukeWidth,peopleCounter;
@@ -7,10 +6,6 @@ AudioContext ac;
 ControlP5 cp5;
 Table table;
 TableRow row;
-ArrayList<Cloud> cloudsArr = new ArrayList();
-
-//test values
-int people = 7;
 
 //constructors
 Cloud cloud;
@@ -31,38 +26,7 @@ int rows = 11;
 String chosenDate;
 
 void mousePressed() {
-  float xR = juke.getX();
-  float yR = juke.getY();
-
-  if ((mouseX > xR*0) && (mouseX < 4*xR) && (mouseY >10*yR) && (mouseY <17*yR)) {
-    if (!jukeboxShown) {
-      jukeboxShown = true;
-      music1.setVisible(jukeboxShown);
-      music2.setVisible(jukeboxShown);
-      music3.setVisible(jukeboxShown);
-      music4.setVisible(jukeboxShown);
-      music5.setVisible(jukeboxShown);
-      stopB.setVisible(jukeboxShown);
-      playB.setVisible(jukeboxShown);
-    } else {
-      jukeboxShown = false;
-      music1.setVisible(jukeboxShown);
-      music2.setVisible(jukeboxShown);
-      music3.setVisible(jukeboxShown);
-      music4.setVisible(jukeboxShown);
-      music5.setVisible(jukeboxShown);
-      stopB.setVisible(jukeboxShown);
-      playB.setVisible(jukeboxShown);
-    }
-  }
-
-  if (dist(mouseX, mouseY, guide.xInput, guide.yInput)<guide.size/2) {
-
-    if (!userGuideShown)userGuideShown = true;
-    else {
-      userGuideShown = false;
-    }
-  }
+  jukebox.mousePressed();
 }
 
 void setup() {
@@ -81,15 +45,8 @@ void setup() {
   musicPlaying = 0;
   chosenDate = "";
   table = loadTable("EIFData.csv");
-  //String test = "081605"; //row,column
-  //TableRow rowTest = table.findRow(test,0);
-  //println(rowTest.getString(7));
 
   jukeboxShown = false;
-  guideimg = loadImage("user_guide.PNG");
-  guideimg.resize(width-75, height);
-  userGuideShown = false;
-  dateChanged=true;
   ac = new AudioContext();
   cp5 = new ControlP5(this);
 
@@ -102,87 +59,12 @@ void setup() {
     }
   }
 
-  //clouds
-  try {
-    updateData();
-  } 
-  catch(NullPointerException e) {
-    e.printStackTrace();
-    println("Can't find date.");
-  }
-
   //constructors
   sky = new Sky(width, height);
   cafe = new Cafe(width, height);
   sun = new Sun(width, height);
   juke = new CafeJuke(width, height);
-  ghosts = new Ghosts(width, height, people);
-  jukebox = new Jukebox(ac, cp5);
-  guide = new Guide(width-100, 30, 60);
-
-  music1 = cp5.addButton("music1")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("+")
-    .setPosition(jukeWidth*1.05, jukeWidth*1.2)
-    .setSize(buttonSize, buttonSize)
-    .setColorBackground(#C9753D)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
-
-  music2 = cp5.addButton("music2")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("+")
-    .setPosition(jukeWidth*1.25, jukeWidth*1.2)
-    .setSize(buttonSize, buttonSize)
-    .setColorBackground(#726A95)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
-
-  music3 = cp5.addButton("music3")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("+")
-    .setPosition(jukeWidth*1.45, jukeWidth*1.2)
-    .setSize(buttonSize, buttonSize)
-    .setColorBackground(#9D7726)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
-
-  music4 = cp5.addButton("music4")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("+")
-    .setPosition(jukeWidth*1.65, jukeWidth*1.2)
-    .setSize(buttonSize, buttonSize)
-    .setColorBackground(#34626C)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
-
-  music5 = cp5.addButton("music5")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("+")
-    .setPosition(jukeWidth*1.85, jukeWidth*1.2)
-    .setSize(buttonSize, buttonSize)
-    .setColorBackground(#70AF85)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
-
-  stopB = cp5.addButton("stopMusic")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("STOP")
-    .setPosition(jukeWidth*5/4, jukeWidth*1.02)
-    .setSize(buttonSize*5/4, buttonSize*5/4)
-    .setColorBackground(#6389df)
-    .setColorForeground(color(0, 255, 0))
-    .setColorActive(color(0, 0, 255));
-
-  playB = cp5.addButton("playMusic")
-    .setValue(0)
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("PLAY")
-    .setPosition(jukeWidth*13/8, jukeWidth*1.02)
-    .setSize(buttonSize*5/4, buttonSize*5/4)
-    .setColorBackground(#133A1B)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
+  jukebox = new Jukebox(width, height, ac, cp5);
 
   try {
     p1 = new SamplePlayer(ac, new Sample(sample1));
@@ -225,8 +107,6 @@ void setup() {
   catch(Exception e) {
     e.printStackTrace();
   }
-
-  println("\nMonth is " + month + "\nDay is " + day + "\nHour is " + hour);
 }
 
 void draw() { 
@@ -242,15 +122,9 @@ void draw() {
 
   //initial displays
   sky.display();
-  ghosts.display();
   sun.display();
   cafe.display();
   juke.display();
-  guide.display();
-  updateCloud();
-  if (userGuideShown) {
-    image(guideimg, 0, 0);
-  }
 
   if (jukeboxShown) {
     jukebox.display();
@@ -265,68 +139,6 @@ void draw() {
     }
     popMatrix();
   }
-}
-
-void updateCloud() {
-  for (int i =0; i < cloudsArr.size(); i++) {
-    Cloud c = cloudsArr.get(i);
-    c.display();
-    c.moveCloud(c);
-  }
-}
-
-
-void updateData() {
-  //cloud data
-  chosenDate=""; //reset 
-  row=table.findRow(chosenDate, 0);
-  if (month < 10) {
-    chosenDate += "0" +Integer.toString(month);
-  } else {
-    chosenDate += Integer.toString(month);
-  }
-  if (day < 10) {
-    chosenDate += "0" + Integer.toString(day);
-  } else {
-    chosenDate +=  Integer.toString(day);
-  }
-  if (hour < 10) {
-    chosenDate += "0" +Integer.toString(hour);
-  } else {
-    chosenDate += Integer.toString(hour);
-  } 
-  
-  
-  solarRadiation = row.getFloat(9); //grab new solar radiation data
-  windSpeed = row.getFloat(8);
-  airTemp = row.getFloat(7);
-  rainGauge = row.getFloat(10);
-  peopleCounter = row.getFloat(11);
-  
-  cloudsArr.clear(); //reset list
-  if (solarRadiation > 1 && solarRadiation < 100) {
-    for (int i=0; i<2; i++) {
-      cloudsArr.add(new Cloud(width, height,windSpeed));
-    }
-  } else if (solarRadiation > 100 && solarRadiation < 250) {
-    for (int i=0; i<4; i++) {
-      cloudsArr.add(new Cloud(width, height,windSpeed));
-    }
-  } else if (solarRadiation > 250) {
-    for (int i=0; i<6; i++) {
-      cloudsArr.add(new Cloud(width, height,windSpeed));
-    }
-  }
-
-  updateCloud();
-  //rain data
-
-  //people data
-  //get people count at this datetime
-  //people = result/10;
-
-  //sun data
-  //outerRadius= (input data/total data)*2 + 3
 }
 
 void music1() {
@@ -414,76 +226,5 @@ void playMusic() {
   default: 
     println("Error in playMusic()"); 
     break;
-  }
-}
-
-int dayCheck() {
-  int[] a1 = {4, 6, 9, 11}; //30s
-  //int[] a2 = {1, 3, 5, 7, 8, 10, 12}; //31s
-  int maxDays=999;
-
-  if (month != 2) { //checks if it's feb
-    for (int i = 0; i<a1.length; i++) {
-      if (month == a1[i]) {
-        maxDays = 30;
-        break;
-      } else {
-        maxDays = 31;
-      }
-    }
-  } else {
-    maxDays = 29;
-  }
-  return maxDays;
-}
-
-void keyPressed() { // Do not store dayCheck() into a variable; it breaks.
-  println("reached keyp = " + keyCode);
-  if (key == CODED) {
-    switch(keyCode) {
-    case UP:
-      month = (month <12) ? ++month : 1;
-      break;
-    case DOWN:
-      month = (month >1) ? --month : 12;
-      break;
-    case LEFT:
-      if (dayCheck() == 30) {
-        day = (day >1) ? --day : 30;
-      } 
-
-      if (dayCheck() == 31) {
-        day = (day >1) ? --day : 31;
-      } 
-
-      if (dayCheck() == 29) {
-        day = (day >1) ? --day : 29;
-      }
-      break;
-    case 39:
-      if (dayCheck() == 30) {
-        day = (day <30) ? ++day : 1;
-        println("chosen date now is " + chosenDate);
-
-        updateData();
-      } 
-
-      if (dayCheck() == 31) {
-        day = (day <31) ? ++day : 1;
-        println("chosen date now is " + chosenDate);
-
-        updateData();
-      }
-
-      if (dayCheck() == 29) {
-        day = (day < 29) ? ++day : 1;
-        println("chosen date now is " + chosenDate);
-
-        updateData();
-      }
-      break;
-    default: 
-      break;
-    }
   }
 }

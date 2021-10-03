@@ -1,39 +1,16 @@
 import controlP5.*;
 import beads.*;
 
-class Cell {
-  float x, y, w, h, angle;
-
-  Cell(float tempX, float tempY, float tempW, float tempH, float tempAngle) {
-    x = tempX;
-    y = tempY;
-    w = tempW;
-    h = tempH;
-    angle = tempAngle;
-  }
-
-  void oscillate() {
-    angle += 0.02;
-  }
-
-  void display() {
-    stroke(255);
-    // Color calculated using sine wave
-    float bright = map(tan(angle), -1, 1, 0, 255);
-    fill(bright, 50, 255);
-    rect(x, y, w, h);
-  }
-}
-
-
 class Jukebox {
   AudioContext ac;
   SamplePlayer p1, p2, p3, p4, p5, p6;
   ControlP5 cp5;
   Cell[][] grid; 
-  int cols, rows, buttonSize, jukeWidth, musicPlaying;
-  
-  Jukebox(AudioContext _ac, ControlP5 _cp5) {
+  int cols, rows, buttonSize, jukeWidth, musicPlaying, xR, yR;
+
+  Jukebox(int _x, int _y, AudioContext _ac, ControlP5 _cp5) {
+    xR = _x/40;
+    yR = _y/20;
     this.ac = _ac;
     this.cp5 = _cp5;
     cols = 12;
@@ -42,7 +19,96 @@ class Jukebox {
     buttonSize = 20;
     musicPlaying = 0;
     grid = new Cell[cols][rows];
+    
+    music1 = cp5.addButton("music1")
+    .setVisible(jukeboxShown)
+    .setCaptionLabel("+")
+    .setPosition(jukeWidth*1.05, jukeWidth*1.2)
+    .setSize(buttonSize, buttonSize)
+    .setColorBackground(#C9753D)
+    .setColorForeground(color(255, 0, 0))
+    .setColorActive(color(0, 0, 255));
+
+  music2 = cp5.addButton("music2")
+    .setVisible(jukeboxShown)
+    .setCaptionLabel("+")
+    .setPosition(jukeWidth*1.25, jukeWidth*1.2)
+    .setSize(buttonSize, buttonSize)
+    .setColorBackground(#726A95)
+    .setColorForeground(color(255, 0, 0))
+    .setColorActive(color(0, 0, 255));
+
+  music3 = cp5.addButton("music3")
+    .setVisible(jukeboxShown)
+    .setCaptionLabel("+")
+    .setPosition(jukeWidth*1.45, jukeWidth*1.2)
+    .setSize(buttonSize, buttonSize)
+    .setColorBackground(#9D7726)
+    .setColorForeground(color(255, 0, 0))
+    .setColorActive(color(0, 0, 255));
+
+  music4 = cp5.addButton("music4")
+    .setVisible(jukeboxShown)
+    .setCaptionLabel("+")
+    .setPosition(jukeWidth*1.65, jukeWidth*1.2)
+    .setSize(buttonSize, buttonSize)
+    .setColorBackground(#34626C)
+    .setColorForeground(color(255, 0, 0))
+    .setColorActive(color(0, 0, 255));
+
+  music5 = cp5.addButton("music5")
+    .setVisible(jukeboxShown)
+    .setCaptionLabel("+")
+    .setPosition(jukeWidth*1.85, jukeWidth*1.2)
+    .setSize(buttonSize, buttonSize)
+    .setColorBackground(#70AF85)
+    .setColorForeground(color(255, 0, 0))
+    .setColorActive(color(0, 0, 255));
+
+  stopB = cp5.addButton("stopMusic")
+    .setVisible(jukeboxShown)
+    .setCaptionLabel("STOP")
+    .setPosition(jukeWidth*5/4, jukeWidth*1.02)
+    .setSize(buttonSize*5/4, buttonSize*5/4)
+    .setColorBackground(#6389df)
+    .setColorForeground(color(0, 255, 0))
+    .setColorActive(color(0, 0, 255));
+
+  playB = cp5.addButton("playMusic")
+    .setValue(0)
+    .setVisible(jukeboxShown)
+    .setCaptionLabel("PLAY")
+    .setPosition(jukeWidth*13/8, jukeWidth*1.02)
+    .setSize(buttonSize*5/4, buttonSize*5/4)
+    .setColorBackground(#133A1B)
+    .setColorForeground(color(255, 0, 0))
+    .setColorActive(color(0, 0, 255));
   } 
+
+  void mousePressed() {
+    if ((mouseX > xR*0) && (mouseX < 4*xR) && (mouseY >10*yR) && (mouseY <17*yR)) {
+      if (!jukeboxShown) {
+        jukeboxShown = true;
+        music1.setVisible(jukeboxShown);
+        music2.setVisible(jukeboxShown);
+        music3.setVisible(jukeboxShown);
+        music4.setVisible(jukeboxShown);
+        music5.setVisible(jukeboxShown);
+        stopB.setVisible(jukeboxShown);
+        playB.setVisible(jukeboxShown);
+      } else {
+        jukeboxShown = false;
+        music1.setVisible(jukeboxShown);
+        music2.setVisible(jukeboxShown);
+        music3.setVisible(jukeboxShown);
+        music4.setVisible(jukeboxShown);
+        music5.setVisible(jukeboxShown);
+        stopB.setVisible(jukeboxShown);
+        playB.setVisible(jukeboxShown);
+      }
+    }
+  }
+
 
   void display() {
     //Jukebox overlay
@@ -99,6 +165,29 @@ class Jukebox {
     stroke(0);
     fill(255, 0, 0);
     quad(jukeWidth*1.5, jukeWidth/1.8, jukeWidth*1.4, jukeWidth/3, jukeWidth*1.5, jukeWidth/2.65, jukeWidth*1.6, jukeWidth/3);
+  }
+}
 
+class Cell {
+  float x, y, w, h, angle;
+
+  Cell(float tempX, float tempY, float tempW, float tempH, float tempAngle) {
+    x = tempX;
+    y = tempY;
+    w = tempW;
+    h = tempH;
+    angle = tempAngle;
+  }
+
+  void oscillate() {
+    angle += 0.02;
+  }
+
+  void display() {
+    stroke(255);
+    // Color calculated using sine wave
+    float bright = map(tan(angle), -1, 1, 0, 255);
+    fill(bright, 50, 255);
+    rect(x, y, w, h);
   }
 }
