@@ -22,7 +22,7 @@ class Sun {
   }
 
   void update(int newColor) {
-    if (newColor==2) {
+    if (newColor==1) {
       colorType=1;
     } else {
       colorType=0;

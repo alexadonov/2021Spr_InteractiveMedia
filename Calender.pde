@@ -1,16 +1,57 @@
 class Calender {
   float xR, yR;
-  int month, day;
+  int month, day, colorType;
   
   //days in the months
   int monthDays[] = {
     31,29,31,30,31,30,31,31,39,31,39,31
   };
   
+  //names of the months
   String monthText[] = {
     "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
   };
-
+  
+  //colors
+  int colors[][] = {
+    //day
+    {
+      //base
+      #E1BFA6,
+      //month bracket
+      #E08963,
+      //day bracket
+      #EADBC3
+    },
+    //night
+    {
+      //base
+      #BBC4C9,
+      //month bracket
+      #858D5A,
+      //day bracket
+      #F4F5F0
+    },
+    //dusk
+    {
+      //base
+      #806063,
+      //month bracket
+      #BC85A3,
+      //day bracket
+      #ECDBBD
+    },
+    //dawn
+    {
+      //base
+      #E1BFA6,
+      //month bracket
+      #F1CDB0,
+      //day bracket
+      #EADBC3
+    }
+  };
+  
   Calender(float _x, float _y, int _month, int _day) {
     xR = _x/40;
     yR = _y/20;
@@ -68,14 +109,20 @@ class Calender {
     
     return maxDays;
   }
+  
+  void update(int newColor) {
+   colorType = newColor; 
+  }
 
   void display() {
     String dayText;
     
-    stroke(0);
-    strokeWeight(3);
+    noStroke();
+    fill(colors[colorType][0]);
     rect(12*xR, 4*yR, 2*xR, 2*yR);
+    fill(colors[colorType][1]);
     rect(12*xR, 4*yR, 2*xR, 0.5*yR);
+    fill(colors[colorType][2]);
     rect(12.25*xR, 4.75*yR, 1.5*xR, 1*yR);
     fill(0);
     textSize(20);

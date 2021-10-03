@@ -44,6 +44,7 @@ void draw() {
     sky.update(colorType);
     sun.update(colorType);
     cafe.update(colorType);
+    calender.update(colorType);
     juke.update(colorType);
     dateChanged=false;
   }
@@ -51,10 +52,10 @@ void draw() {
   //initial displays
   sky.display();
   sun.display();
+  ghosts.display();
   cafe.display();
   calender.display();
   juke.display();
-  ghosts.display();
 }
 
 void keyPressed() {
@@ -65,7 +66,7 @@ void keyPressed() {
 //then sets the colorType to reflect that period
 int getColortype(int hour, int month){
   int newColor = colorType; //default to current ColorType
-  int monthPeriods = 2;
+  int monthPeriods = month;
   int periods[][] = {
     //0 Jan, Dec
     {5,20},
@@ -98,7 +99,7 @@ int getColortype(int hour, int month){
   } else if (hour == periods[monthPeriods][0]){ //dawn
     newColor=3;
   }
-  return newColor;
+  return 1;
 }
 
 //void updateData(int day, int month, int hour){

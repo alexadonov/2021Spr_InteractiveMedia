@@ -12,8 +12,8 @@ class Ghosts {
   
   //barista
   void ghost1(){
-    barista = loadImage("Barista.png");
-    image(barista, 4.5*xR, 4.8*yR);
+    //barista = loadImage("Barista.png");
+    //image(barista, 4.5*xR, 4.8*yR);
   }
   
   void ghost2(){

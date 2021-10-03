@@ -1,5 +1,3 @@
-import controlP5.*;
-
 class Sky {
   float h, w;
   int colorType;
