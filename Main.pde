@@ -7,6 +7,7 @@ TableRow row;
 boolean dateChanged, hourChanged, databoardShown, guideShown;
 String chosenDate;
 ArrayList<Cloud> cloudsArr = new ArrayList();
+ArrayList<Rain> raindrops = new ArrayList();
 
 //constructors
 Cafe cafe;
@@ -19,6 +20,7 @@ DataBoard databoard;
 Guide guide;
 Clock clock;
 Cloud cloud;
+Rain rain;
 
 void setup() {
   size(2000, 1000);
@@ -44,6 +46,7 @@ void setup() {
   guide = new Guide(width-30, 30, 60);
   clock = new Clock(month(), day(), hour(), width, height);
   cloud = new Cloud(width, height);
+  rain = new Rain(width, height);
 }
 
 void draw() { 
@@ -70,6 +73,7 @@ void draw() {
   sky.display();
   sun.display();
   cloud.updateCloud();
+  rain.display();
   cafe.display();
   calender.display();
   juke.display();
@@ -121,6 +125,10 @@ void updateData() {
     //cloud data
     cloudsArr.clear(); //reset list
     cloud.populateCloudArr(solarRadiation);
+    
+    //rain data
+    raindrops.clear();
+    rain.populate();
   } 
   catch(NullPointerException e) {
     solarRadiation = 0;
@@ -157,7 +165,9 @@ int getColortype(int hour, int month) {
     monthPeriods=3;
   } else if (month==11) {
     monthPeriods=4;
-  }
+  } else {
+    monthPeriods=2;
+  };
 
   if (hour>periods[monthPeriods][0] && hour<periods[monthPeriods][1]) { //day
     newColor=0;

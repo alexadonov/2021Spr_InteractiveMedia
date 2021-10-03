@@ -93,6 +93,7 @@ class Calender {
         }
         break;
       default:
+        month=month();
         break;
       }
     }

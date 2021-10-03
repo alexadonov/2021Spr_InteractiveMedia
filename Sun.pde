@@ -1,6 +1,5 @@
 class Sun {
   float xR, yR;
-  float outerRadius = 4;
   int colorType;
 
   int dayNight[][] = {
@@ -30,6 +29,8 @@ class Sun {
   }
 
   void display() {
+    float outerRadius = (airTemp*0.215);
+    
     fill(dayNight[colorType][0], 200);
     ellipse(37*xR, 3*yR, outerRadius*xR, outerRadius*yR);
     fill(dayNight[colorType][1]);
