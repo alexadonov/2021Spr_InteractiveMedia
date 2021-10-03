@@ -69,11 +69,9 @@ void draw() {
   }
 
   //initial displays
-
   sky.display();
   sun.display();
-    updateCloud();
-
+  cloud.updateCloud();
   cafe.display();
   calender.display();
   juke.display();
@@ -152,14 +150,6 @@ int getColortype() {
   return newColor;
 }
 
-void updateCloud() {
-  for (int i =0; i < cloudsArr.size(); i++) {
-    Cloud c = cloudsArr.get(i);
-    c.display();
-    c.moveCloud(c);
-  }
-}
-
 void updateData() {
   //cloud data
   chosenDate=""; //reset 
@@ -185,20 +175,9 @@ void updateData() {
     airTemp = row.getFloat(7);
     rainGauge = row.getFloat(10);
     peopleCounter = row.getFloat(11);
+
     cloudsArr.clear(); //reset list
-    if (solarRadiation > 1 && solarRadiation < 100) {
-      for (int i=0; i<2; i++) {
-        cloudsArr.add(new Cloud(width, height, windSpeed));
-      }
-    } else if (solarRadiation > 100 && solarRadiation < 250) {
-      for (int i=0; i<4; i++) {
-        cloudsArr.add(new Cloud(width, height, windSpeed));
-      }
-    } else if (solarRadiation > 250) {
-      for (int i=0; i<6; i++) {
-        cloudsArr.add(new Cloud(width, height, windSpeed));
-      }
-    }
+    cloud.populateCloudArr(solarRadiation, windSpeed);
   } 
   catch(NullPointerException e) {
     solarRadiation = 0;
@@ -207,13 +186,6 @@ void updateData() {
     rainGauge = 0;
     peopleCounter = 1;
   }
-
-  //Cloud
-  //reset list
-
-  //println("chosend " + chosenDate);
-  //println("clouds size " + cloudsArr.size());
-
 
   //Rain
   //Rain(float _w, float _h, float numDrops) {

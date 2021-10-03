@@ -1,6 +1,6 @@
 class Cloud {
   PImage cloud;
-  float x, y, w, h,speed;
+  float x, y, w, h, speed;
 
   Cloud(float _w, float _h, float _speed) {
     cloud=loadImage("cloud.png");
@@ -22,6 +22,27 @@ class Cloud {
       c.y=random(0, h*0.45); //will be changed depending where the window is
     }
   }
-  
-  
+  void updateCloud() {
+    for (int i =0; i < cloudsArr.size(); i++) {
+      Cloud c = cloudsArr.get(i);
+      c.display();
+      c.moveCloud(c);
+    }
+  }
+
+  void populateCloudArr(float solarRadiation, float windSpeed) {
+    if (solarRadiation > 1 && solarRadiation < 100) {
+      for (int i=0; i<2; i++) {
+        cloudsArr.add(new Cloud(width, height, windSpeed));
+      }
+    } else if (solarRadiation > 100 && solarRadiation < 250) {
+      for (int i=0; i<4; i++) {
+        cloudsArr.add(new Cloud(width, height, windSpeed));
+      }
+    } else if (solarRadiation > 250) {
+      for (int i=0; i<6; i++) {
+        cloudsArr.add(new Cloud(width, height, windSpeed));
+      }
+    }
+  }
 }
