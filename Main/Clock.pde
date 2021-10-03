@@ -12,10 +12,10 @@ class Clock {
   }
 
   int mousePressed() {
-    if (h < 23) {
+    if (h < 24) {
       h++;
     } else {
-      h = 24;
+      h = 1;
     }
     println("hour is " +h);
     return h;

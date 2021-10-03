@@ -72,13 +72,14 @@ void draw() {
 
   sky.display();
   sun.display();
+    updateCloud();
+
   cafe.display();
   calender.display();
   juke.display();
   ghosts.display();
   clock.display();
   guide.display();
-  updateCloud();
 
   if (userGuideShown) {
     image(guideimg, 0, 0);

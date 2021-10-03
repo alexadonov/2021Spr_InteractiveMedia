@@ -8,7 +8,7 @@ class Cloud {
     this.h = _h;
     this.speed = _speed;
     this.x=random(-500, -100);
-    this.y=random(0, h);
+    this.y=random(0, h*0.45);
   }
 
   void display() {
@@ -19,7 +19,7 @@ class Cloud {
     c.x+= speed; // x+=windspeed
     if (c.x>w) {
       c.x=random(-500, -100);
-      c.y=random(0, h); //will be changed depending where the window is
+      c.y=random(0, h*0.45); //will be changed depending where the window is
     }
   }
   
