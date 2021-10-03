@@ -62,14 +62,6 @@ class Clock {
     popMatrix();
   }
   
-  float getX(){
-    return 0;
-  }
-  
-  float getY(){
-  return 0;
-  }
-  
   float getCircleDiameter(){
   return 2*xR;
   }

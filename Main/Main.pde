@@ -1,40 +1,28 @@
 //Global Variables
 int month, day, hour, colorType;
-<<<<<<< Updated upstream
-float temp, rain, wind, cloud;
-boolean dateChanged, hourChanged;
-=======
 float airTemp, rainGauge, windSpeed, solarRadiation, cloudNum, jukeWidth, peopleCounter;
 boolean dateChanged, hourChanged, userGuideShown;
 Table table;
 TableRow row;
 ArrayList<Cloud> cloudsArr = new ArrayList();
->>>>>>> Stashed changes
 
 //test values
 int people = 7;
 
 //constructors
-<<<<<<< Updated upstream
-Cafe cafe;
-CafeJuke juke;
-Ghosts ghosts;
-=======
+
 Cloud cloud;
 Cafe cafe;
 CafeJuke juke;
 Ghosts ghosts;
 Guide guide;
->>>>>>> Stashed changes
 Sun sun;
 Sky sky;
 Calender calender;
 Clock clock;
-<<<<<<< Updated upstream
-=======
+
 PImage guideimg;
 String chosenDate;
->>>>>>> Stashed changes
 
 void setup() {
   size(2000, 1000);
@@ -46,10 +34,7 @@ void setup() {
   dateChanged=true;
   hourChanged = true;
   colorType = getColortype();
-<<<<<<< Updated upstream
-=======
   table = loadTable("EIFData.csv");
->>>>>>> Stashed changes
 
   //constructors
   sky = new Sky(height, width);
@@ -59,14 +44,11 @@ void setup() {
   ghosts = new Ghosts(width, height, people);
   calender = new Calender(width, height, month(), day());
   clock = new Clock(month, day, hour, cafe.getX(), cafe.getY());
-<<<<<<< Updated upstream
-=======
   guide = new Guide(width-100, 30, 60);
 
   guideimg = loadImage("user_guide.PNG");
   guideimg.resize(width-75, height);
   userGuideShown = false;
->>>>>>> Stashed changes
 }
 
 void draw() { 
@@ -89,25 +71,18 @@ void draw() {
   calender.display();
   juke.display();
   ghosts.display();
-<<<<<<< Updated upstream
   clock.display();
-=======
   guide.display();
 
-  clock.display();
 
   if (userGuideShown) {
     image(guideimg, 0, 0);
   }
->>>>>>> Stashed changes
 }
 
 void keyPressed() {
   calender.keyPressed();
-<<<<<<< Updated upstream
-=======
   updateData();
->>>>>>> Stashed changes
 }
 
 //calculates the correct period of the day(day,night,dusk,dawn) based on hour and month
@@ -137,7 +112,6 @@ int getColortype() {
   } else if (month==11) {
     monthPeriods=4;
   }
-  println("get colour type hour is " +hour);
 
   if (hour>periods[monthPeriods][0] && hour<periods[monthPeriods][1]) { //day
     newColor=0;
@@ -152,11 +126,18 @@ int getColortype() {
 }
 
 void mousePressed() { 
-<<<<<<< Updated upstream
-  if (dist(mouseX,mouseY,13*juke.getX(),2*juke.getY()) < clock.getCircleDiameter()/2 ) {
-    println("reached clock!");
+  if (dist(mouseX, mouseY, 13*juke.getX(), 2*juke.getY()) < clock.getCircleDiameter()/2 ) {
     hour = clock.mousePressed();
     hourChanged = true;
+  }
+
+  //Guide
+  if (dist(mouseX, mouseY, guide.xInput, guide.yInput)<guide.size/2) {
+    if (!userGuideShown)
+      userGuideShown = true;
+    else {
+      userGuideShown = false;
+    }
   }
   // if(dist(mouseX, mouseY, 0, 0) < (clock.getCircleDiameter()/2)){
 }
@@ -173,23 +154,9 @@ void mousePressed() {
 // //sun data
 // //outerRadius= (input data/total data)*2 + 3
 //}
-=======
 
   //Clock
-  if (dist(mouseX, mouseY, 13*juke.getX(), 2*juke.getY()) < clock.getCircleDiameter()/2 ) {
-    hour = clock.mousePressed();
-    hourChanged = true;
-  }
-
-  //Guide
-  if (dist(mouseX, mouseY, guide.xInput, guide.yInput)<guide.size/2) {
-    if (!userGuideShown)
-      userGuideShown = true;
-    else {
-      userGuideShown = false;
-    }
-  }
-}
+  
 
 void updateData() {
   //cloud data
@@ -269,4 +236,3 @@ int dayCheck() {
   }
   return maxDays;
 }
->>>>>>> Stashed changes
