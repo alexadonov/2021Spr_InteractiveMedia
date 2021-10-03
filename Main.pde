@@ -6,6 +6,7 @@ Table table;
 TableRow row;
 boolean dateChanged, hourChanged, databoardShown, guideShown;
 String chosenDate;
+ArrayList<Cloud> cloudsArr = new ArrayList();
 
 //constructors
 Cafe cafe;
@@ -17,6 +18,7 @@ Calender calender;
 DataBoard databoard;
 Guide guide;
 Clock clock;
+Cloud cloud;
 
 void setup() {
   size(2000, 1000);
@@ -41,6 +43,7 @@ void setup() {
   databoard = new DataBoard(width, height);
   guide = new Guide(width-30, 30, 60);
   clock = new Clock(month(), day(), hour(), width, height);
+  cloud = new Cloud(width, height);
 }
 
 void draw() { 
@@ -66,6 +69,7 @@ void draw() {
   //initial displays
   sky.display();
   sun.display();
+  cloud.updateCloud();
   cafe.display();
   calender.display();
   juke.display();
@@ -88,8 +92,8 @@ void mousePressed() {
   clock.mousePressed();
 }
 
+//updates the data
 void updateData() {
-  //cloud data
   chosenDate=""; //reset 
   if (month < 10) {
     chosenDate += "0" +Integer.toString(month);
@@ -106,12 +110,25 @@ void updateData() {
   } else {
     chosenDate += Integer.toString(hour);
   } 
-  row=table.findRow(chosenDate, 0);
-  solarRadiation = row.getFloat(9); //grab new solar radiation data
-  windSpeed = row.getFloat(8);
-  airTemp = row.getFloat(7);
-  rainGauge = row.getFloat(10);
-  peopleCounter = row.getInt(11);
+  try {
+    row=table.findRow(chosenDate, 0);
+    solarRadiation = row.getFloat(9); //grab new solar radiation data
+    windSpeed = row.getFloat(8);
+    airTemp = row.getFloat(7);
+    rainGauge = row.getFloat(10);
+    peopleCounter = row.getInt(11);
+
+    //cloud data
+    cloudsArr.clear(); //reset list
+    cloud.populateCloudArr(solarRadiation);
+  } 
+  catch(NullPointerException e) {
+    solarRadiation = 0;
+    windSpeed = 0;
+    airTemp = 0;
+    rainGauge = 0;
+    peopleCounter = 1;
+  }
 }
 
 //calculates the correct period of the day(day,night,dusk,dawn) based on hour and month
