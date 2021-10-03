@@ -45,4 +45,8 @@ class Sky {
       line(0, i, w, i);
     }
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

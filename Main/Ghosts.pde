@@ -46,4 +46,8 @@ class Ghosts {
     ghost6();
     ghost7();
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
