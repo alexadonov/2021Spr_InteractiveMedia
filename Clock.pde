@@ -12,15 +12,17 @@ class Clock {
   }
 
   void mousePressed() {
-    if (h < 24) {
-      h++;
-    } else {
-      h = 1;
-    }
+    if (dist(mouseX, mouseY, 13*xR, 2*yR) < clock.getCircleDiameter()/2) {
+      if (h < 24) {
+        h++;
+      } else {
+        h = 1;
+      }
 
-    hour = h;
-    hourChanged = true;
-    updateData();
+      hour = h;
+      hourChanged = true;
+      updateData();
+    }
   }
 
   void display() {
