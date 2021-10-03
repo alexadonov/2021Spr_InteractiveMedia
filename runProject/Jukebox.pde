@@ -19,70 +19,70 @@ class Jukebox {
     buttonSize = 20;
     musicPlaying = 0;
     grid = new Cell[cols][rows];
-    
+
     music1 = cp5.addButton("music1")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("+")
-    .setPosition(jukeWidth*1.05, jukeWidth*1.2)
-    .setSize(buttonSize, buttonSize)
-    .setColorBackground(#C9753D)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
+      .setVisible(jukeboxShown)
+      .setCaptionLabel("+")
+      .setPosition(jukeWidth*1.05, jukeWidth*1.2)
+      .setSize(buttonSize, buttonSize)
+      .setColorBackground(#C9753D)
+      .setColorForeground(color(255, 0, 0))
+      .setColorActive(color(0, 0, 255));
 
-  music2 = cp5.addButton("music2")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("+")
-    .setPosition(jukeWidth*1.25, jukeWidth*1.2)
-    .setSize(buttonSize, buttonSize)
-    .setColorBackground(#726A95)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
+    music2 = cp5.addButton("music2")
+      .setVisible(jukeboxShown)
+      .setCaptionLabel("+")
+      .setPosition(jukeWidth*1.25, jukeWidth*1.2)
+      .setSize(buttonSize, buttonSize)
+      .setColorBackground(#726A95)
+      .setColorForeground(color(255, 0, 0))
+      .setColorActive(color(0, 0, 255));
 
-  music3 = cp5.addButton("music3")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("+")
-    .setPosition(jukeWidth*1.45, jukeWidth*1.2)
-    .setSize(buttonSize, buttonSize)
-    .setColorBackground(#9D7726)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
+    music3 = cp5.addButton("music3")
+      .setVisible(jukeboxShown)
+      .setCaptionLabel("+")
+      .setPosition(jukeWidth*1.45, jukeWidth*1.2)
+      .setSize(buttonSize, buttonSize)
+      .setColorBackground(#9D7726)
+      .setColorForeground(color(255, 0, 0))
+      .setColorActive(color(0, 0, 255));
 
-  music4 = cp5.addButton("music4")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("+")
-    .setPosition(jukeWidth*1.65, jukeWidth*1.2)
-    .setSize(buttonSize, buttonSize)
-    .setColorBackground(#34626C)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
+    music4 = cp5.addButton("music4")
+      .setVisible(jukeboxShown)
+      .setCaptionLabel("+")
+      .setPosition(jukeWidth*1.65, jukeWidth*1.2)
+      .setSize(buttonSize, buttonSize)
+      .setColorBackground(#34626C)
+      .setColorForeground(color(255, 0, 0))
+      .setColorActive(color(0, 0, 255));
 
-  music5 = cp5.addButton("music5")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("+")
-    .setPosition(jukeWidth*1.85, jukeWidth*1.2)
-    .setSize(buttonSize, buttonSize)
-    .setColorBackground(#70AF85)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
+    music5 = cp5.addButton("music5")
+      .setVisible(jukeboxShown)
+      .setCaptionLabel("+")
+      .setPosition(jukeWidth*1.85, jukeWidth*1.2)
+      .setSize(buttonSize, buttonSize)
+      .setColorBackground(#70AF85)
+      .setColorForeground(color(255, 0, 0))
+      .setColorActive(color(0, 0, 255));
 
-  stopB = cp5.addButton("stopMusic")
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("STOP")
-    .setPosition(jukeWidth*5/4, jukeWidth*1.02)
-    .setSize(buttonSize*5/4, buttonSize*5/4)
-    .setColorBackground(#6389df)
-    .setColorForeground(color(0, 255, 0))
-    .setColorActive(color(0, 0, 255));
+    stopB = cp5.addButton("stopMusic")
+      .setVisible(jukeboxShown)
+      .setCaptionLabel("STOP")
+      .setPosition(jukeWidth*5/4, jukeWidth*1.02)
+      .setSize(buttonSize*5/4, buttonSize*5/4)
+      .setColorBackground(#6389df)
+      .setColorForeground(color(0, 255, 0))
+      .setColorActive(color(0, 0, 255));
 
-  playB = cp5.addButton("playMusic")
-    .setValue(0)
-    .setVisible(jukeboxShown)
-    .setCaptionLabel("PLAY")
-    .setPosition(jukeWidth*13/8, jukeWidth*1.02)
-    .setSize(buttonSize*5/4, buttonSize*5/4)
-    .setColorBackground(#133A1B)
-    .setColorForeground(color(255, 0, 0))
-    .setColorActive(color(0, 0, 255));
+    playB = cp5.addButton("playMusic")
+      .setValue(0)
+      .setVisible(jukeboxShown)
+      .setCaptionLabel("PLAY")
+      .setPosition(jukeWidth*13/8, jukeWidth*1.02)
+      .setSize(buttonSize*5/4, buttonSize*5/4)
+      .setColorBackground(#133A1B)
+      .setColorForeground(color(255, 0, 0))
+      .setColorActive(color(0, 0, 255));
   } 
 
   void mousePressed() {
@@ -109,6 +109,93 @@ class Jukebox {
     }
   }
 
+  void music1() {
+    p1.setToLoopStart();
+    p1.start();
+    musicPlaying = 1;
+    p2.setToEnd();
+    p3.setToEnd();
+    p4.setToEnd();
+    p5.setToEnd();
+  }
+
+  void music2() {
+    p2.setToLoopStart();
+    p2.start();
+    musicPlaying = 2;
+    p1.setToEnd();
+    p3.setToEnd();
+    p4.setToEnd();
+    p5.setToEnd();
+  }
+
+  void music3() {
+    p3.setToLoopStart();
+    p3.start();
+    musicPlaying = 3;
+    p2.setToEnd();
+    p1.setToEnd();
+    p4.setToEnd();
+    p5.setToEnd();
+  }
+
+  void music4() {
+    p4.setToLoopStart();
+    p4.start();
+    musicPlaying = 4;
+    p2.setToEnd();
+    p3.setToEnd();
+    p1.setToEnd();
+    p5.setToEnd();
+  }
+
+  void music5() {
+    p5.setToLoopStart();
+    p5.start();
+    musicPlaying = 5;
+    p2.setToEnd();
+    p3.setToEnd();
+    p4.setToEnd();
+    p1.setToEnd();
+  }
+
+  void stopMusic() {
+    playB.setCaptionLabel("RESUME");
+    println("Music paused.");
+    p1.pause(true);
+    p2.pause(true);
+    p3.pause(true);
+    p4.pause(true);
+    p5.pause(true);
+  }
+
+  void playMusic() {
+    switch(musicPlaying) {
+    case 1: 
+      p1.pause(false); 
+      println("Music " + musicPlaying + " is now playing.");
+      break;
+    case 2: 
+      p2.pause(false); 
+      println("Music " + musicPlaying + " is now playing.");
+      break;
+    case 3: 
+      p3.pause(false); 
+      println("Music " + musicPlaying + " is now playing.");
+      break;
+    case 4: 
+      p4.pause(false); 
+      println("Music " + musicPlaying + " is now playing.");
+      break;
+    case 5: 
+      p5.pause(false); 
+      println("Music " + musicPlaying + " is now playing.");
+      break;
+    default: 
+      println("Error in playMusic()"); 
+      break;
+    }
+  }
 
   void display() {
     //Jukebox overlay
