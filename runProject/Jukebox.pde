@@ -2,16 +2,14 @@ import controlP5.*;
 import beads.*;
 
 class Jukebox {
-  AudioContext ac;
   SamplePlayer p1, p2, p3, p4, p5, p6;
   ControlP5 cp5;
   Cell[][] grid; 
   int cols, rows, buttonSize, jukeWidth, musicPlaying, xR, yR;
 
-  Jukebox(int _x, int _y, AudioContext _ac, ControlP5 _cp5) {
+  Jukebox(int _x, int _y, ControlP5 _cp5) {
     xR = _x/40;
     yR = _y/20;
-    this.ac = _ac;
     this.cp5 = _cp5;
     cols = 12;
     rows = 11;

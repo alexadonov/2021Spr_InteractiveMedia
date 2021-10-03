@@ -64,7 +64,7 @@ void setup() {
   cafe = new Cafe(width, height);
   sun = new Sun(width, height);
   juke = new CafeJuke(width, height);
-  jukebox = new Jukebox(width, height, ac, cp5);
+  jukebox = new Jukebox(width, height, cp5);
 
   try {
     p1 = new SamplePlayer(ac, new Sample(sample1));
@@ -128,15 +128,103 @@ void draw() {
 
   if (jukeboxShown) {
     jukebox.display();
-    pushMatrix();
-    translate(jukeWidth+(jukeWidth/5), jukeWidth+(jukeWidth/3));
-    for (int i = 0; i < cols; i++) {     
-      for (int j = 0; j < rows; j++) {
-        // Oscillate and display each object
-        grid[i][j].oscillate();
-        grid[i][j].display();
-      }
-    }
-    popMatrix();
+    //pushMatrix();
+    //translate(jukeWidth+(jukeWidth/5), jukeWidth+(jukeWidth/3));
+    //for (int i = 0; i < cols; i++) {     
+    //  for (int j = 0; j < rows; j++) {
+    //    // Oscillate and display each object
+    //    grid[i][j].oscillate();
+    //    grid[i][j].display();
+    //  }
+    //}
+    //popMatrix();
   }
 }
+
+void music1() {
+    p1.setToLoopStart();
+    p1.start();
+    musicPlaying = 1;
+    p2.setToEnd();
+    p3.setToEnd();
+    p4.setToEnd();
+    p5.setToEnd();
+  }
+
+  void music2() {
+    p2.setToLoopStart();
+    p2.start();
+    musicPlaying = 2;
+    p1.setToEnd();
+    p3.setToEnd();
+    p4.setToEnd();
+    p5.setToEnd();
+  }
+
+  void music3() {
+    p3.setToLoopStart();
+    p3.start();
+    musicPlaying = 3;
+    p2.setToEnd();
+    p1.setToEnd();
+    p4.setToEnd();
+    p5.setToEnd();
+  }
+
+  void music4() {
+    p4.setToLoopStart();
+    p4.start();
+    musicPlaying = 4;
+    p2.setToEnd();
+    p3.setToEnd();
+    p1.setToEnd();
+    p5.setToEnd();
+  }
+
+  void music5() {
+    p5.setToLoopStart();
+    p5.start();
+    musicPlaying = 5;
+    p2.setToEnd();
+    p3.setToEnd();
+    p4.setToEnd();
+    p1.setToEnd();
+  }
+
+  void stopMusic() {
+    playB.setCaptionLabel("RESUME");
+    println("Music paused.");
+    p1.pause(true);
+    p2.pause(true);
+    p3.pause(true);
+    p4.pause(true);
+    p5.pause(true);
+  }
+
+  void playMusic() {
+    switch(musicPlaying) {
+    case 1: 
+      p1.pause(false); 
+      println("Music " + musicPlaying + " is now playing.");
+      break;
+    case 2: 
+      p2.pause(false); 
+      println("Music " + musicPlaying + " is now playing.");
+      break;
+    case 3: 
+      p3.pause(false); 
+      println("Music " + musicPlaying + " is now playing.");
+      break;
+    case 4: 
+      p4.pause(false); 
+      println("Music " + musicPlaying + " is now playing.");
+      break;
+    case 5: 
+      p5.pause(false); 
+      println("Music " + musicPlaying + " is now playing.");
+      break;
+    default: 
+      println("Error in playMusic()"); 
+      break;
+    }
+  }
